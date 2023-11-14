@@ -1,7 +1,7 @@
 ```shell
 python -m venv .venv
-pip install -m requirements.txt
+python -m pip install -m requirements.txt
 source .venv/bin/activate
-pytest -rP
+python -m pytest -rP
 ```
 

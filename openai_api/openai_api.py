@@ -1,29 +1,28 @@
+import os
 from openai import OpenAI
 from dotenv import load_dotenv
-import os
-import logging
+from common.logging_define import *
+from common.openai_model_define import Encoding
 
-LOG_E = logging.error
-LOG_D = logging.debug
-LOG_C = logging.critical
-LOG_W = logging.warning
-
+dotenv_path = ""
 if __debug__:
     dotenv_path='.env.local'
-else:
+else:  # python -O
     dotenv_path='env.prod'
 
-if 'OPENAI_API_KEY' not in os.environ:
+key = 'OPENAI_API_KEY'
+if key not in os.environ or os.environ.get(key):
     load_dotenv(dotenv_path)
-LOG_E(f"OEPNAI Key is not find from local environment. Checked path: {dotenv_path}") if 'OPENAI_API_KEY' not in os.environ else None
-
+    if os.environ.get(key):
+        LOG_C("Critial: Cannot find OPENAI_API_KEY. Please run in the root folder") 
 
 client = OpenAI(
     api_key=os.environ.get('OPENAI_API_KEY')
 )
 
+
 stream = client.chat.completions.create(
-    model="cl100k_base",
+    model=Encoding.CL100K_BASE.value,
     messages=[{"role": "user", "content": "Say this is a test"}],
     stream=True,
 )

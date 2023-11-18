@@ -15,4 +15,4 @@ def test_chat_completion():
     ]
     
     response = fetch_chat_completion(client, model, messages)
-    print(response.choices[0])
+    assert response.choices[0] is not None

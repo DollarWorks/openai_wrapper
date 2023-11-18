@@ -3,10 +3,8 @@ import os
 import asyncio
 from openai_api.text_generation_api import *
 from common.openai_model_define import Model
-import pdb
 
-
-async def test_chat_completion():
+def test_chat_completion():
     model = Model.GPT_3_5_TURBO.value
     client = OpenAI()
     messages=[
@@ -16,8 +14,5 @@ async def test_chat_completion():
         {"role": "user", "content": "Where was it played?"}
     ]
     
-    response = await fetch_chat_completion(client, model, messages)
-    print("hello")
-
-
-
+    response = fetch_chat_completion(client, model, messages)
+    print(response.choices[0])

@@ -372,3 +372,28 @@ def test_p2_t2_own_solution_ex2():  # Principle2, Tactic1
 
 
 
+###########################################################
+#  Model Limitation: Hallucinations
+###########################################################
+def test_hallucinations():
+    prompt = f"""
+    Tell me about AeroGlide UltraSlim Smart Toothbrush by Boie
+    """
+
+    messages = [
+        {
+            "role": "system",
+            "content": "You are a helpful assistant and output in JSON"
+        }, 
+        {
+            "role": "user",
+            "content": prompt,
+        }]
+
+    try:
+        response = fetch_chat_completion_json(client, messages)
+        LOG_D(response.choices[0].message.content)
+    except Exception:
+        assert False, "An exception was raised"
+
+

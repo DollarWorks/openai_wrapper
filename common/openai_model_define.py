@@ -8,8 +8,10 @@ class Encoding(Enum):
 class Model(Enum):
 	#2023-, gpt-4 (and gpt-4 turbo), gpt-3.5-turbo
 	GPT4 = "gpt-4"
-	GPT4_TURBO = 'gpt-4-1106-preview'
-	GPT_3_5_TURBO = "gpt-3.5-turbo"
+	GPT4_TURBO = 'gpt-4-1106-preview'  # support JSON repsone
+	GPT_3_5_TURBO = "gpt-3.5-turbo"   
+	GPT_3_5_TURBO_1106 = "gpt-3.5-turbo-1106"  #support JSON response
+
 
 	#2023, babbage-002, davinci-002
 	TEXT_EMBEDDING_ADA_002 = "text-embedding-ada-002"

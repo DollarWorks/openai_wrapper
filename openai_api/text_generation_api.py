@@ -1,25 +1,29 @@
+import json
 from openai import OpenAI
 from typing import List, Dict
 from openai_api.api_key_loading import *
-import json
+from common.openai_model_define import *
 
-def fetch_chat_completion(client: OpenAI, messages: List[Dict[str, str]], model: str = "gpt-3.5-turbo" ):
+def fetch_chat_completion(client: OpenAI, 
+                          messages: List[Dict[str, str]], 
+                          model: str = Model.GPT_3_5_TURBO.value):
     response = client.chat.completions.create(
         model=model,
         messages=messages
     )
     return response
 
-# from common.openai_model_define  import *
 
-# model = Model.GPT_3_5_TURBO.value
-# client = OpenAI()
-# messages=[
-#     {"role": "system", "content": "You are a helpful assistant."},
-#     {"role": "user", "content": "Who won the world series in 2020?"},
-#     {"role": "assistant", "content": "The Los Angeles Dodgers won the World Series in 2020."},
-#     {"role": "user", "content": "Where was it played?"}
-# ]
 
-# response = fetch_chat_completion(client, model, messages)
-# print(response.choices[0])
+# response.choices[0].message.
+def fetch_chat_completion_json(client: OpenAI, 
+                               messages: List[Dict[str, str]], 
+                               model: str = Model.GPT_3_5_TURBO_1106.value):
+    response = client.chat.completions.create(
+        model=model,
+        response_format={"type": "json_object"},
+        messages=messages
+    )
+    return response
+
+

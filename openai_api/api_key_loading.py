@@ -1,6 +1,6 @@
 import os
 from openai import OpenAI
-from dotenv import load_dotenv
+from dotenv import load_dotenv, find_dotenv
 from common.logging_define import *
 from common.openai_model_define import Encoding
 
@@ -12,7 +12,8 @@ else:  # python -O
 
 key = 'OPENAI_API_KEY'
 if key not in os.environ or os.environ.get(key):
-    LOG_C(f"") if not os.path.exists(dotenv_path) else None
+    file = find_dotenv(dotenv_path)
+    LOG_C(f"Cannot find {file}") if not file else None
 
     load_dotenv(dotenv_path)
     LOG_C("Cannot find OPENAI_API_KEY. Please run in the root folder")  if not os.environ.get('OPENAI_API_KEY') else None

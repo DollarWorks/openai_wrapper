@@ -2,10 +2,12 @@ import pytest
 import os
 from openai_api.text_generation_api import *
 from common.openai_model_define import Model
+from common.logging_define import print_json_d
 
 
 
 client = OpenAI()
+
 
 # openai test cases
 def test_chat_completion():
@@ -99,16 +101,72 @@ def test_chat_completion_json_openaidoc():
 
     try:
         response = fetch_chat_completion_json(client, messages)
+        print(json.dumps(response.choices[0].message.content, indent=4))
     except Exception:
         assert False, "An excpetion was raised"
 
-    print(json.dumps(response.choices[0].message.content, indent=4))
 
 
 # Tactic 3: Ask the model to check whether conditions are satisfied
+def test_chat_completion_json_deeplearningai_tactic_3():
+    text_1 = f"""
+    Making a cup of tea is easy! First, you need to get some \
+    water boiling. While that's happening, \
+    grab a cup and put a tea bag in it. Once the water is \
+    hot enough, just pour it over the tea bag. \
+    Let it sit for a bit so the tea can steep. After a \
+    few minutes, take out the tea bag. If you \
+    like, you can add some sugar or milk to taste. \
+    And that's it! You've got yourself a delicious \
+    cup of tea to enjoy.
+    """
+
+    prompt = f"""
+    You will be provided with text delimited by triple quotes.
+    If it contains a sequence of instructions, \
+    re-write those instructions in the following format:
+
+    Step 1 - ...
+    Step 2 - …
+    …
+    Step N - …
+
+    If the text does not contain a sequence of instructions, \
+    then simply write \"No steps provided.\"
+    
+    \"\"\"{text_1}\"\"\"
+    """
+
+    messages = [
+        {
+            "role": "system",
+            "content": "you are helpful assistant designed to ouput JSON"
+        },
+        {
+            "role": "user",
+            "content": prompt
+        }
+    ]
+
+    try:
+        response = fetch_chat_completion_json(client, messages)
+        LOG_D(response.choices[0].message.content)
+    except Exception:
+        assert False, "An exception was raised"
+
+
+
+
+
+
+
 # Tactic 4: "Few-shot" prompting
-#
-#
+
+
+
+
+
+
 # Principle 2: Give the model time to “think”
 # 
 

@@ -16,3 +16,4 @@ def test_chat_completion():
     
     response = fetch_chat_completion(client, model, messages)
     assert response.choices[0] is not None
+    assert response.model is not None

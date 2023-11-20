@@ -1,9 +1,9 @@
 from openai import OpenAI
 from typing import List, Dict
-# from openai_api.api_key_loading import *
+from openai_api.api_key_loading import *
 import json
 
-def fetch_chat_completion(client: OpenAI, model: str, messages: List[Dict[str, str]] ):
+def fetch_chat_completion(client: OpenAI, messages: List[Dict[str, str]], model: str = "gpt-3.5-turbo" ):
     response = client.chat.completions.create(
         model=model,
         messages=messages

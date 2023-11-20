@@ -133,7 +133,7 @@ def test_chat_completion_json_deeplearningai_tactic_3():
 
     If the text does not contain a sequence of instructions, \
     then simply write \"No steps provided.\"
-    
+
     \"\"\"{text_1}\"\"\"
     """
 
@@ -155,18 +155,34 @@ def test_chat_completion_json_deeplearningai_tactic_3():
         assert False, "An exception was raised"
 
 
-
-
-
-
-
 # Tactic 4: "Few-shot" prompting
+def test_chat_completion_json_deeplearningai_tactic_4():
+    prompt = f"""
+        Your task is to answer in a consistent style.
 
+        <child>: Teach me about patience.
 
+        <grandparent>: The river that carves the deepest \
+        valley flows from a modest spring; the \
+        grandest symphony originates from a single note; \
+        the most intricate tapestry begins with a solitary thread.
 
+        <child>: Teach me about resilience.
+        """
 
+    messages = [
+        {
+            "role": "system",
+            "content":"you are helpful assistant designed to output JSON"
+        },
+        {
+            "role": "user",
+            "content": prompt
+        }]
 
-
-# Principle 2: Give the model time to “think”
-# 
+    try:
+        response = fetch_chat_completion_json(client, messages)
+        LOG_D(response.choices[0].message.content)
+    except Exception:
+        assert Fasle, "An exception was rasied"
 

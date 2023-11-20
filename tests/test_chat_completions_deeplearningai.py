@@ -8,21 +8,6 @@ from common.logging_define import print_json_d
 
 client = OpenAI()
 
-
-# openai test cases
-def test_chat_completion():
-    messages=[
-        {"role": "system", "content": "You are a helpful assistant."},
-        {"role": "user", "content": "Who won the world series in 2020?"},
-        {"role": "assistant", "content": "The Los Angeles Dodgers won the World Series in 2020."},
-        {"role": "user", "content": "Where was it played?"}
-    ]
-
-    response = fetch_chat_completion(client, messages)
-    assert response.choices[0] is not None
-    assert response.model is not None
-
-
 # deeplearning.ai prompt enginnering
 # https://learn.deeplearning.ai/chatgpt-prompt-eng/lesson/2/guidelines
 #
@@ -32,7 +17,7 @@ def test_chat_completion():
 #   -- Delimiters can be anything like: ```, """, < >, <tag> </tag>
 #
 
-def test_chat_completion_deeplearningai_tactic_1():
+def test_p1_t1_delimiters():
     text = f"""
     You should express what you want a model to do by \
     providing instructions that are as clear and \
@@ -60,7 +45,7 @@ def test_chat_completion_deeplearningai_tactic_1():
 # Tactic 2: Ask for a structured output
 #   -- JSON, HTML
 #
-def test_chat_completion_json_deeplearningai_tactic_2():
+def test_p1_t2_json():
     prompt = f"""
     Generate a list of three made-up book titles along \
     with their authors and genres. \
@@ -81,34 +66,9 @@ def test_chat_completion_json_deeplearningai_tactic_2():
     print(json.dumps(response.choices[0].message.content, indent=4))
 
 
-def test_chat_completion_json_openaidoc():
-    prompt = f"""
-    Generate a list of three made-up book titles along \
-    with their authors and genres. \
-    Provide them with the following keys: \
-    book_id, title, author, genre.
-    """
-
-    messages = [
-        { 
-            "role": "system",
-            "content": "you are helpful assisstant designed to output JSON"
-        }, 
-        {
-            "role": "user",
-            "content": prompt
-        }]
-
-    try:
-        response = fetch_chat_completion_json(client, messages)
-        print(json.dumps(response.choices[0].message.content, indent=4))
-    except Exception:
-        assert False, "An excpetion was raised"
-
-
 
 # Tactic 3: Ask the model to check whether conditions are satisfied
-def test_chat_completion_json_deeplearningai_tactic_3():
+def test_p1_t3_check():
     text_1 = f"""
     Making a cup of tea is easy! First, you need to get some \
     water boiling. While that's happening, \
@@ -156,7 +116,7 @@ def test_chat_completion_json_deeplearningai_tactic_3():
 
 
 # Tactic 4: "Few-shot" prompting
-def test_chat_completion_json_deeplearningai_tactic_4():
+def test_p1_t4_few_shot():
     prompt = f"""
         Your task is to answer in a consistent style.
 
@@ -185,4 +145,56 @@ def test_chat_completion_json_deeplearningai_tactic_4():
         LOG_D(response.choices[0].message.content)
     except Exception:
         assert Fasle, "An exception was rasied"
+
+
+##################################################################
+#   Principle 2: Give the model time to "think"
+##################################################################
+# Tactic1: Specify the steps required to complete a task
+def test_p2_t1_steps():  # Principle2, Tactic1
+    text = f"""
+    In a charming village, siblings Jack and Jill set out on \
+    a quest to fetch water from a hilltop \
+    well. As they climbed, singing joyfully, misfortune \
+    struck—Jack tripped on a stone and tumbled \
+    down the hill, with Jill following suit. \
+    Though slightly battered, the pair returned home to \
+    comforting embraces. Despite the mishap, \
+    their adventurous spirits remained undimmed, and they \
+    continued exploring with delight.
+    """
+    # example 1
+    prompt = f"""
+    Perform the following actions:
+    1 - Summarize the following text delimited by triple \
+    backticks with 1 sentence.
+    2 - Translate the summary into French.
+    3 - List each name in the French summary.
+    4 - Output a json object that contains the following \
+    keys: french_summary, num_names.
+    
+    Separate your answers with line breaks.
+    
+    Text:
+    ```{text}```
+    """
+
+    messages = [
+        {
+            "role": "system",
+            "content": "You are a helpful assistant and output in JSON"
+        }, 
+        {
+            "role": "user",
+            "content": prompt,
+        }]
+
+    try:
+        response = fetch_chat_completion_json(client, messages)
+        LOG_D(response.choices[0].message.content)
+    except Exception:
+        assert False, "An exception was raised"
+
+
+
 

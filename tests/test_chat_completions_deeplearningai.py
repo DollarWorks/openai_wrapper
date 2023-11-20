@@ -250,7 +250,10 @@ def test_p2_t1_steps_ex2():  # Principle2, Tactic1
 
 
 ## Tactic 2: Instruct the model to work out its own solution before rushing to a conclusion
-def test_p2_t2_own_solution():  # Principle2, Tactic1
+
+# Note that the student's solution is actually not correct.
+# We can fix this by instructing the model to work out its own solution first.
+def test_p2_t2_own_solution_ex1():  # Principle2, Tactic1
 
     prompt = f"""
     Determine if the student's solution is correct or not.
@@ -290,3 +293,82 @@ def test_p2_t2_own_solution():  # Principle2, Tactic1
         LOG_D(response.choices[0].message.content)
     except Exception:
         assert False, "An exception was raised"
+
+
+# 
+def test_p2_t2_own_solution_ex2():  # Principle2, Tactic1
+    prompt = f"""
+    Your task is to determine if the student's solution \
+    is correct or not.
+    To solve the problem do the following:
+    - First, work out your own solution to the problem. 
+    - Then compare your solution to the student's solution \ 
+    and evaluate if the student's solution is correct or not. 
+    Don't decide if the student's solution is correct until 
+    you have done the problem yourself.
+    
+    Use the following format:
+    Question:
+    ```
+    question here
+    ```
+    Student's solution:
+    ```
+    student's solution here
+    ```
+    Actual solution:
+    ```
+    steps to work out the solution and your solution here
+    ```
+    Is the student's solution the same as actual solution \
+    just calculated:
+    ```
+    yes or no
+    ```
+    Student grade:
+    ```
+    correct or incorrect
+    ```
+    
+    Question:
+    ```
+    I'm building a solar power installation and I need help \
+    working out the financials. 
+    - Land costs $100 / square foot
+    - I can buy solar panels for $250 / square foot
+    - I negotiated a contract for maintenance that will cost \
+    me a flat $100k per year, and an additional $10 / square \
+    foot
+    What is the total cost for the first year of operations \
+    as a function of the number of square feet.
+    ``` 
+    Student's solution:
+    ```
+    Let x be the size of the installation in square feet.
+    Costs:
+    1. Land cost: 100x
+    2. Solar panel cost: 250x
+    3. Maintenance cost: 100,000 + 100x
+    Total cost: 100x + 250x + 100,000 + 100x = 450x + 100,000
+    ```
+    Actual solution:
+    """
+
+    messages = [
+        {
+            "role": "system",
+            "content": "You are a math teacher and output in JSON"
+        }, 
+        {
+            "role": "user",
+            "content": prompt,
+        }]
+
+    try:
+        response = fetch_chat_completion_json(client, messages)
+        LOG_D(response.choices[0].message.content)
+    except Exception:
+        assert False, "An exception was raised"
+
+
+

@@ -295,7 +295,7 @@ def test_p2_t2_own_solution_ex1():  # Principle2, Tactic1
         assert False, "An exception was raised"
 
 
-# 
+# fix the wrong student answer
 def test_p2_t2_own_solution_ex2():  # Principle2, Tactic1
     prompt = f"""
     Your task is to determine if the student's solution \

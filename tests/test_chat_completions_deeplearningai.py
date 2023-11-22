@@ -1,6 +1,6 @@
 import pytest
 import os
-from openai_api.text_generation_api import *
+from text_generation.text_generation_api import *
 from common.openai_model_define import Model
 from common.logging_define import print_json_d
 

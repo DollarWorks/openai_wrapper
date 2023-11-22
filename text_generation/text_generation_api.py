@@ -1,7 +1,7 @@
 import json
 from openai import OpenAI
 from typing import List, Dict
-from openai_api.api_key_loading import *
+from common.api_key_loading import *
 from common.openai_model_define import *
 
 def fetch_chat_completion(client: OpenAI, 

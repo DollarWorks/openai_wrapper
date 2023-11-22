@@ -144,7 +144,7 @@ def test_p1_t4_few_shot():
         response = fetch_chat_completion_json(client, messages)
         LOG_D(response.choices[0].message.content)
     except Exception:
-        assert Fasle, "An exception was rasied"
+        assert False, "An exception was rasied"
 
 
 ##################################################################

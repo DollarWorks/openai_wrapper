@@ -1,4 +1,4 @@
-from speech_to_text.wrapper import *
+from src.openaiwrapper.speech_to_text.wrapper import *
 
 client = OpenAI()
 
@@ -8,12 +8,12 @@ expect = "Here's to the crazy ones, the misfits, the rebels, the troublemakers, 
 def test_transcript_audio_to_json():
     result = transcript_audio_to_json(client, input_filepath="./input/thinkdifferent.mp4")
 
-    LOG_D(result.text)
+    log_d(result.text)
     assert result.text == expect
 
 
 def test_transcript_audio_to_text():
     result = transcript_audio_to_text(client, input_filepath="./input/thinkdifferent.mp4")
-    LOG_D(result)
+    log_d(result)
     assert result.rstrip() == expect
 

@@ -1,13 +1,15 @@
-from common.api_key_loading import *
-from text_to_voice.audio_define import *
+from ..common.api_key_loading import *
+from audio_define import *
+from openai import OpenAI
 
-def convert_text_to_audio(client: OpenAI, 
-                          input: str, 
+
+def convert_text_to_audio(client: OpenAI,
+                          input: str,
                           output_filepath: str = "test.mp3",
-                          voice = VoiceType.ALLOY.value,
-                          model = AudioModel.TTS_1.value):
+                          voice=VoiceType.ALLOY.value,
+                          model=AudioModel.TTS_1.value):
     response = client.audio.speech.create(
-        model=model, 
+        model=model,
         voice=voice,
         input=input
     )

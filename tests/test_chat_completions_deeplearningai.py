@@ -1,14 +1,10 @@
-import pytest
-import os
-from text_generation.text_generation_api import *
-from common.openai_model_define import Model
-from common.logging_define import print_json_d
-
-
+from text_generation.chat_completion import *
+from common.logging_define import log_d
 
 client = OpenAI()
 
-# deeplearning.ai prompt enginnering
+
+# deeplearning.ai prompt engineering
 # https://learn.deeplearning.ai/chatgpt-prompt-eng/lesson/2/guidelines
 #
 # Principle 1: Write clear and specific instructions
@@ -66,7 +62,6 @@ def test_p1_t2_json():
     print(json.dumps(response.choices[0].message.content, indent=4))
 
 
-
 # Tactic 3: Ask the model to check whether conditions are satisfied
 def test_p1_t3_check():
     text_1 = f"""
@@ -110,7 +105,7 @@ def test_p1_t3_check():
 
     try:
         response = fetch_chat_completion_json(client, messages)
-        LOG_D(response.choices[0].message.content)
+        log_d(response.choices[0].message.content)
     except Exception:
         assert False, "An exception was raised"
 
@@ -133,7 +128,7 @@ def test_p1_t4_few_shot():
     messages = [
         {
             "role": "system",
-            "content":"you are helpful assistant designed to output JSON"
+            "content": "you are helpful assistant designed to output JSON"
         },
         {
             "role": "user",
@@ -142,7 +137,7 @@ def test_p1_t4_few_shot():
 
     try:
         response = fetch_chat_completion_json(client, messages)
-        LOG_D(response.choices[0].message.content)
+        log_d(response.choices[0].message.content)
     except Exception:
         assert False, "An exception was rasied"
 
@@ -183,7 +178,7 @@ def test_p2_t1_steps_ex1():  # Principle2, Tactic1
         {
             "role": "system",
             "content": "You are a helpful assistant and output in JSON"
-        }, 
+        },
         {
             "role": "user",
             "content": prompt,
@@ -191,12 +186,9 @@ def test_p2_t1_steps_ex1():  # Principle2, Tactic1
 
     try:
         response = fetch_chat_completion_json(client, messages)
-        LOG_D(response.choices[0].message.content)
+        log_d(response.choices[0].message.content)
     except Exception:
         assert False, "An exception was raised"
-
-
-
 
 
 # Tactic1-example2: Ask for output in a specific format
@@ -235,7 +227,7 @@ def test_p2_t1_steps_ex2():  # Principle2, Tactic1
         {
             "role": "system",
             "content": "You are a helpful assistant and output in JSON"
-        }, 
+        },
         {
             "role": "user",
             "content": prompt,
@@ -243,10 +235,9 @@ def test_p2_t1_steps_ex2():  # Principle2, Tactic1
 
     try:
         response = fetch_chat_completion_json(client, messages)
-        LOG_D(response.choices[0].message.content)
+        log_d(response.choices[0].message.content)
     except Exception:
         assert False, "An exception was raised"
-
 
 
 ## Tactic 2: Instruct the model to work out its own solution before rushing to a conclusion
@@ -282,7 +273,7 @@ def test_p2_t2_own_solution_ex1():  # Principle2, Tactic1
         {
             "role": "system",
             "content": "You are a helpful assistant and output in JSON"
-        }, 
+        },
         {
             "role": "user",
             "content": prompt,
@@ -290,7 +281,7 @@ def test_p2_t2_own_solution_ex1():  # Principle2, Tactic1
 
     try:
         response = fetch_chat_completion_json(client, messages)
-        LOG_D(response.choices[0].message.content)
+        log_d(response.choices[0].message.content)
     except Exception:
         assert False, "An exception was raised"
 
@@ -358,7 +349,7 @@ def test_p2_t2_own_solution_ex2():  # Principle2, Tactic1
         {
             "role": "system",
             "content": "You are a math teacher and output in JSON"
-        }, 
+        },
         {
             "role": "user",
             "content": prompt,
@@ -366,10 +357,9 @@ def test_p2_t2_own_solution_ex2():  # Principle2, Tactic1
 
     try:
         response = fetch_chat_completion_json(client, messages)
-        LOG_D(response.choices[0].message.content)
+        log_d(response.choices[0].message.content)
     except Exception:
         assert False, "An exception was raised"
-
 
 
 ###########################################################
@@ -384,7 +374,7 @@ def test_hallucinations():
         {
             "role": "system",
             "content": "You are a helpful assistant and output in JSON"
-        }, 
+        },
         {
             "role": "user",
             "content": prompt,
@@ -392,8 +382,6 @@ def test_hallucinations():
 
     try:
         response = fetch_chat_completion_json(client, messages)
-        LOG_D(response.choices[0].message.content)
+        log_d(response.choices[0].message.content)
     except Exception:
         assert False, "An exception was raised"
-
-

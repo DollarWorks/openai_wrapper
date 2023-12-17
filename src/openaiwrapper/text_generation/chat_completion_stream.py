@@ -1,6 +1,6 @@
-from common.api_key_loading import *
+from ..common.api_key_loading import *
+from openai import OpenAI
 from fastapi import HTTPException
-
 
 openai_model = "gpt-3.5-turbo"
 max_responses = 1
@@ -8,9 +8,12 @@ temperature = 0.7
 max_tokens = 512
 
 error503 = "OpenAI server is busy, try again later"
+
+
 def fetch_chat_completion_stream(prompt: str):
     try:
-        response = openai.ChatCompletion.create(
+        openai = OpenAI()
+        response = openai.chat.completions.create(
             model=openai_model,
             temperature=temperature,
             max_tokens=max_tokens,
@@ -34,4 +37,3 @@ def fetch_chat_completion_stream(prompt: str):
     except Exception as e:
         print("OpenAI Response (Streaming) Error: " + str(e))
         raise HTTPException(503, error503)
-

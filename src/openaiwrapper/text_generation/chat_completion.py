@@ -1,11 +1,10 @@
-import json
 from openai import OpenAI
 from typing import List, Dict
-from common.api_key_loading import *
 from common.openai_model_define import *
 
-def fetch_chat_completion(client: OpenAI, 
-                          messages: List[Dict[str, str]], 
+
+def fetch_chat_completion(client: OpenAI,
+                          messages: List[Dict[str, str]],
                           model: str = Model.GPT_3_5_TURBO.value):
     response = client.chat.completions.create(
         model=model,
@@ -14,10 +13,9 @@ def fetch_chat_completion(client: OpenAI,
     return response
 
 
-
 # response.choices[0].message.
-def fetch_chat_completion_json(client: OpenAI, 
-                               messages: List[Dict[str, str]], 
+def fetch_chat_completion_json(client: OpenAI,
+                               messages: List[Dict[str, str]],
                                model: str = Model.GPT_3_5_TURBO_1106.value):
     response = client.chat.completions.create(
         model=model,
@@ -25,5 +23,3 @@ def fetch_chat_completion_json(client: OpenAI,
         messages=messages
     )
     return response
-
-

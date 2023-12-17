@@ -5,7 +5,6 @@ class SpeechModel(Enum):
     WHISPER_1 = "whisper-1"
 
 
-
 class MediaType(Enum):
     MP3 = "mp3"
     MP4 = "mp4"
@@ -14,6 +13,3 @@ class MediaType(Enum):
     M4A = "m4a"
     WAV = "wav"
     WEBM = "webm"
-
-
-

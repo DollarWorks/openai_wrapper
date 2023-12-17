@@ -1,5 +1,7 @@
-from text_to_voice.wrapper import *
+from src.openaiwrapper.text_to_voice.wrapper import *
+from src.openaiwrapper.common.openai_model_define import AudioModel, VoiceType
 import os
+from openai import OpenAI
 
 client = OpenAI()
 

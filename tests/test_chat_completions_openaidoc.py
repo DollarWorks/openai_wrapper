@@ -1,14 +1,13 @@
-import pytest
-import os
-from text_generation.text_generation_api import *
-from common.openai_model_define import Model
-from common.logging_define import print_json_d
+from text_generation.chat_completion import *
+from openai import OpenAI
+import json
 
 client = OpenAI()
 
+
 # openai test cases
 def test_chat_completion():
-    messages=[
+    messages = [
         {"role": "system", "content": "You are a helpful assistant."},
         {"role": "user", "content": "Who won the world series in 2020?"},
         {"role": "assistant", "content": "The Los Angeles Dodgers won the World Series in 2020."},
@@ -20,7 +19,6 @@ def test_chat_completion():
     assert response.model is not None
 
 
-
 def test_chat_completion_json_openaidoc():
     prompt = f"""
     Generate a list of three made-up book titles along \
@@ -30,10 +28,10 @@ def test_chat_completion_json_openaidoc():
     """
 
     messages = [
-        { 
+        {
             "role": "system",
-            "content": "you are helpful assisstant designed to output JSON"
-        }, 
+            "content": "you are helpful assistant designed to output JSON"
+        },
         {
             "role": "user",
             "content": prompt
@@ -43,7 +41,4 @@ def test_chat_completion_json_openaidoc():
         response = fetch_chat_completion_json(client, messages)
         print(json.dumps(response.choices[0].message.content, indent=4))
     except Exception:
-        assert False, "An excpetion was raised"
-
-
-
+        assert False, "An exception was raised"

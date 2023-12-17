@@ -1,14 +1,14 @@
 import os
 from openai import OpenAI
-from speech_to_text.speech_define import *
-from common.logging_define import *
+from speech_define import *
+from ..common.logging_define import *
 
 
 def transcript_audio_to_json(client: OpenAI, input_filepath: str, model: str = SpeechModel.WHISPER_1.value):
     audio_file = open(input_filepath, 'rb')
     transcript = client.audio.transcriptions.create(
-        model = model,
-        file = audio_file
+        model=model,
+        file=audio_file
     )
     return transcript
 
@@ -19,14 +19,14 @@ def transcript_audio_to_text(client: OpenAI, input_filepath: str, model: str = S
 
         audio_file = open(input_filepath, 'rb')
         transcript = client.audio.transcriptions.create(
-            model = model,
-            file = audio_file,
+            model=model,
+            file=audio_file,
             response_format="text"
         )
         return transcript
 
     except ValueError as e:
-        LOG_D(f"check input file failed")
+        log_d(f"check input file failed")
 
 
 def _check_file(file_path: str):

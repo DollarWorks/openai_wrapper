@@ -2,3 +2,16 @@
 requires = ["setuptools", "wheel"]  
 build-backend = "setuptools.build_meta"
 
+[project]
+name = "openaiwrapper"
+authors = [
+    {name = "li tian", email = "heefan@gmail.com" }
+]
+description = "OpenAI API Wrapper"
+readme = "doc/README.md"
+requires-python = ">3.11"
+keywords = ["OpenAI", "Chat Completion", "Whisper"]
+version = "0.1.0"
+
+[tool.setuptools.packages.find]
+exclude = ["docs*", "tests*"]

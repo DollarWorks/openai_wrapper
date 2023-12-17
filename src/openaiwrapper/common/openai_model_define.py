@@ -7,7 +7,7 @@ class Encoding(Enum):
     R50K_BASE = "r50k_base"
 
 
-class Model(Enum):
+class GPTModel(Enum):
     # 2023-, gpt-4 (and gpt-4 turbo), gpt-3.5-turbo
     GPT4 = "gpt-4"
     GPT4_TURBO = 'gpt-4-1106-preview'  # support JSON repsone

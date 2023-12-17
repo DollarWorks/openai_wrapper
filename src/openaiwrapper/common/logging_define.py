@@ -9,8 +9,8 @@ logging.basicConfig(level=logging.DEBUG)
 
 
 def print_json_d(json_str: str, message: str = ""):
-    json_data = json.load(json_str)
-    pretty = json.dumps(json_data)
+    json_data = json.loads(json_str)
+    pretty = json.dumps(json_data, indent=4)
     log_d(f"{message}\n{pretty}\n")
 
 

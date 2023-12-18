@@ -1,7 +1,7 @@
 import os
 from openai import OpenAI
 from speech_define import *
-from ..common.logging_define import *
+from common.logging_define import *
 
 
 def transcript_audio_to_json(client: OpenAI, input_filepath: str, model: str = SpeechModel.WHISPER_1.value):
